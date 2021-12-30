@@ -17,7 +17,7 @@ object Main extends IOApp {
       .as(ExitCode.Success)
   }
 
-  def program[F[_]: Logger: Files: Sync, A: Decoder: Encoder]: F[Unit] = {
+  def program[F[_]: Logger: Files: Sync, A: Decoder: Encoder]: F[Unit] =
     config.load[F].flatMap(config => {
       val partAB = consumeFile.apply(config.file1)
       val partB = consumeFile.apply(config.file2)
@@ -30,7 +30,6 @@ object Main extends IOApp {
 
       writeFile(config.file3).apply(partA)
     })
-  }
 
 
   def consumeFile[F[_]: Sync: Files: Logger, A: Decoder]: Path => F[(Long, List[A])] = {
@@ -56,18 +55,17 @@ object Main extends IOApp {
 
 
   def writeFile[F[_] : Sync : Files : Logger, A: Encoder](target: Path): F[List[A]] => F[Unit] = {
-    def writePath: F[List[A]] => Stream[F, INothing] =
-      Stream.evalSeq(_)
-        .through(_.map(_.asJson.noSpaces))
-        .through(text.utf8.encode)
-        .through(Files[F].writeAll(target))
-
-
     def logCount: F[List[A]] => F[List[A]] ={
       def count:List[A] => Int = _.size
 
      _.flatTap(l => Logger[F].info(s"About to write ${count(l)} records"))
     }
+
+    def writePath: F[List[A]] => Stream[F, INothing] =
+      Stream.evalSeq(_)
+        .through(_.map(_.asJson.noSpaces))
+        .through(text.utf8.encode)
+        .through(Files[F].writeAll(target))
 
     def compile[A]: Stream[F, A] => F[Unit] = _.compile.drain
 

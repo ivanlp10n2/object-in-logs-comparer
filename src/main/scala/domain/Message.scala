@@ -1,9 +1,7 @@
 package domain
 
-import infrastructure.config.Marshaller
-import io.circe.Decoder.Result
 import io.circe.generic.semiauto._
-import io.circe.{Decoder, Encoder, HCursor, Json}
+import io.circe.{Decoder, Encoder}
 
 import java.time.LocalDateTime
 
