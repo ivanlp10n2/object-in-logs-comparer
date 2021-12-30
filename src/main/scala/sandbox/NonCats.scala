@@ -1,3 +1,5 @@
+package sandbox
+
 class NonCats {
 
   def completeLine: List[Int] => Either[String, Int]= {

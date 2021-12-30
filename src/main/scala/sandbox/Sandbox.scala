@@ -1,6 +1,8 @@
+package sandbox
+
+import cats.effect._
 import cats.effect.kernel.Concurrent
 import cats.effect.std.Console
-import cats.effect._
 import cats.syntax.all._
 import eu.timepit.refined.numeric.Positive
 import fs2._

@@ -19,3 +19,10 @@ assumption: file1 and file2 are not ordered.
 
     - file3: Stream[DomainObject] = file1Domain filterWith file2Domain
     - write ouput(file3, targetPath)
+
+
+### motivations:
+I know it does not have data to run it, you can build the model of your data (with its own codecs) 
+and just run the program with it. 
+
+This project is intended to get familiar with fs2 (and solve things that I actually need)
