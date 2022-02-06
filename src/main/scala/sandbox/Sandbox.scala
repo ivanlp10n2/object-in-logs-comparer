@@ -72,7 +72,7 @@ object Bribes extends App {
   /**
    * compare each index with current value
    * find diff between original position and current
-   * if > 2 returns a Left(Too chaotic)
+   * if > 2 returns file1 Left(Too chaotic)
    * otherwise sum it
    *
    * @return

@@ -1,5 +1,7 @@
 package sandbox
 
+import sandbox.Sdbx2.InputLine.Answer
+
 object Sdbx2 extends App {
 
   import scala.io.StdIn

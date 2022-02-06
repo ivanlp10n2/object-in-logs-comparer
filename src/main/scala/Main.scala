@@ -1,6 +1,6 @@
 import cats.effect._
 import cats.syntax.all._
-import domain.SiteCreationMessage
+import domain.DummyModel
 import fs2.io.file.{Files, Path}
 import infrastructure._
 import io.circe.fs2._
@@ -13,7 +13,7 @@ object Main extends IOApp {
   override def run(args: List[String]): IO[ExitCode] = {
     import infrastructure.config.TestLogger._
 
-    program[IO, SiteCreationMessage]
+    program[IO, DummyModel]
       .as(ExitCode.Success)
   }
 
@@ -22,15 +22,16 @@ object Main extends IOApp {
       val partAB = consumeFile.apply(config.file1)
       val partB = consumeFile.apply(config.file2)
 
-      def notIn[B](b: List[B]): B => Boolean = elem => !b.contains(elem)
+      val partA: F[List[A]] = {
+        def in[B](b: List[B]): B => Boolean = elem => b.contains(elem)
 
-      val partA: F[List[A]] = (partAB, partB).mapN {
-          case ((_, ab), (_, b)) => ab.filter(notIn(b))
+        (partAB, partB).mapN {
+          case ((_, ab), (_, b)) => ab.filterNot(in(b))
+        }
       }
 
       writeFile(config.file3).apply(partA)
     })
-
 
   def consumeFile[F[_]: Sync: Files: Logger, A: Decoder]: Path => F[(Long, List[A])] = {
     def consumePath: Path => Stream[F, A] = path =>
@@ -47,7 +48,7 @@ object Main extends IOApp {
       .map(l => (l.size, l))
 
     def logCount: F[(Long, List[A])] => F[(Long, List[A])] = _.flatTap { case (count, _) =>
-      Logger[F].info(s"Consumed $count records")
+      Logger[F].info(s"Consumed $count records from ")
     }
 
     consumePath andThen countRecords andThen logCount
@@ -58,12 +59,13 @@ object Main extends IOApp {
     def logCount: F[List[A]] => F[List[A]] ={
       def count:List[A] => Int = _.size
 
-     _.flatTap(l => Logger[F].info(s"About to write ${count(l)} records"))
+     _.flatTap(l => Logger[F].info(s"About to write ${count(l)} records to $target"))
     }
 
     def writePath: F[List[A]] => Stream[F, INothing] =
       Stream.evalSeq(_)
         .through(_.map(_.asJson.noSpaces))
+        .intersperse("\n")
         .through(text.utf8.encode)
         .through(Files[F].writeAll(target))
 
