@@ -7,6 +7,8 @@ file2 is composed of just part B.
 
 The necessity is to output file3 composed of just part A.
 
+Outer left join ( file1 (part A + part B + id), file2 (part B + id)  )
+
 assumption: file1 and file2 are not ordered.
 
 -- Steps
