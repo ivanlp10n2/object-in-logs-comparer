@@ -5,7 +5,7 @@ We have two files. file1 and file2
 file1 is composed of parts A and B.
 file2 is composed of just part B.
 
-The necessity is to output file3 composed of just part A.
+The necessity is to output file3 containing part A.
 
 Outer left join ( file1 (part A + part B + id), file2 (part B + id)  )
 
