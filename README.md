@@ -1,4 +1,4 @@
-## test-file-comparer
+## object-in-logs-comparer
 
 I have two files containing **logs** of `serialized objects`.
 
