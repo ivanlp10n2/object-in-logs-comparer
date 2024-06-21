@@ -1,15 +1,14 @@
-## compare logs
+## test-file-comparer
 
-We have two files. file1 and file2
+I have two files containing **logs** of `serialized objects`.
 
-file1 is composed of parts A and B.
-file2 is composed of just part B.
+file1 is the output merge `A` and `B`.
+file2 is only `B` output.
 
-The necessity is to output file3 containing part A.
+The need is: file3 containing `A`.
 
-Outer left join ( file1 (part A + part B + id), file2 (part B + id)  )
-
-assumption: file1 and file2 are not ordered.
+assumption: 
+- file1 and file2 are not ordered. therefore I will store it in memory until I hash it and use some sort of Id
 
 -- Steps
 
@@ -24,7 +23,4 @@ assumption: file1 and file2 are not ordered.
 
 
 ### motivations:
-I know it does not have data to run it, you can build the model of your data (with its own codecs) 
-and just run the program with it. 
-
-This project is intended to get familiar with fs2 (and solve things that I actually need)
+I know that making it a list breaks the purpose of a streaming but I wanted to gain familiarity with fs2 AND solve the problem, this is one way I found.
