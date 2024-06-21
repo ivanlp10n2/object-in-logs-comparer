@@ -24,4 +24,4 @@ assumption:
 
 
 ### motivations:
-I know that making it a list breaks the purpose of a streaming but I wanted to gain familiarity with fs2 AND solve the problem, this is one way I found.
+I know that making it a **list** breaks the purpose of a **streaming**, I wanted to **gain familiarity** with fs2 AND **solve the problem**, this is one way I found. This is also whyh there's a `sandbox` folder over there too 
