@@ -2,13 +2,13 @@
 
 I have two files containing **logs** of `serialized objects`.
 
-file1 is the output merge `A` and `B`.
-file2 is only `B` output.
+**file1** is the output merge `A` and `B`.
+**file2** is only `B` output.
 
 The need is: file3 containing `A`.
 
 assumption: 
-- file1 and file2 are not ordered. therefore I will store it in memory until I hash it and use some sort of Id
+- **file1** and **file2** are not ordered. therefore I will store it in memory until I hash it and use some sort of Id
 
 -- Steps
 
